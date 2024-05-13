@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 
-base_folder = './data/raw/'
+base_folder = './data/raw'
 csv_file = './data/dog_breeds_images.csv'
 csv_headers = ['id', 'image', 'label']
 

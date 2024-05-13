@@ -7,7 +7,10 @@ def download_images(image_urls, folder, breed_name):
     if not os.path.exists(breed_folder):
         os.makedirs(breed_folder)
 
-    for i, image_url in enumerate(image_urls):
+    # 获取已经存在的图片数量，以便继续命名
+    existing_images = len([name for name in os.listdir(breed_folder) if os.path.isfile(os.path.join(breed_folder, name))])
+
+    for i, image_url in enumerate(image_urls, start=existing_images):
         try:
             response = requests.get(image_url)
             if response.status_code == 200:
@@ -20,28 +23,32 @@ def download_images(image_urls, folder, breed_name):
 base_folder = './data/raw/'
 
 urls_and_breeds = [
-    ('https://chien.com/photos-chiens/photo-shiba-inu-95-1.php', 'shiba_inu'),
     ('https://www.chien.com/photos-chiens/photo-berger-allemand-14-1.php', 'berger_allemand'),
-    ('https://www.chien.com/photos-chiens/photo-golden-retriever-25-1.php', 'golden_retriever'),
-    ('https://www.chien.com/photos-chiens/photo-bouledogue-francais-20-1.php', 'bouledogue_francais'),
-    ('https://www.chien.com/photos-chiens/photo-retriever-a-poil-plat-91-1.php', 'retriever_a_poil_plat'),
-    ('https://www.chien.com/photos-chiens/photo-husky-siberien-36-1.php', 'husky_siberien'),
-    ('https://www.chien.com/photos-chiens/photo-bichon-frise-126-1.php', 'bichon_frise'),
+    ('https://www.chien.com/photos-chiens/photo-berger-allemand-14-2.php', 'berger_allemand'),
+    ('https://www.chien.com/photos-chiens/photo-berger-allemand-14-3.php', 'berger_allemand'),
+    ('https://www.chien.com/photos-chiens/photo-berger-allemand-14-4.php', 'berger_allemand'),
+    ('https://www.chien.com/photos-chiens/photo-berger-allemand-14-5.php', 'berger_allemand'),
+    ('https://www.chien.com/photos-chiens/photo-berger-allemand-14-6.php', 'berger_allemand'),
+    ('https://www.chien.com/photos-chiens/photo-berger-allemand-14-47.php', 'berger_allemand'),
+    ('https://www.chien.com/photos-chiens/photo-berger-allemand-14-48.php', 'berger_allemand'),
     ('https://www.chien.com/photos-chiens/photo-samoyede-56-1.php', 'samoyede'),
-    ('https://www.chien.com/photos-chiens/photo-braque-allemand-a-poil-court-231-1.php', 'braque_allemand_a_poil_court'),
-    ('https://www.chien.com/photos-chiens/photo-caniche-34-1.php', 'caniche'),
-    ('https://www.chien.com/photos-chiens/photo-shih-tzu-355-1.php', 'shih_tzu'),
-    ('https://www.chien.com/photos-chiens/photo-dobermann-55-1.php', 'dobermann'),
-    ('https://www.chien.com/photos-chiens/photo-boxer-5-1.php', 'boxer'),
-    ('https://www.chien.com/photos-chiens/photo-labrador-husky-507-1.php', 'labrador_husky'),
-    ('https://www.chien.com/photos-chiens/photo-petit-levrier-italien-415-1.php', 'petit_levrier_italien'),
+    ('https://www.chien.com/photos-chiens/photo-samoyede-56-2.php', 'samoyede'),
+    ('https://www.chien.com/photos-chiens/photo-samoyede-56-3.php', 'samoyede'),
+    ('https://www.chien.com/photos-chiens/photo-samoyede-56-4.php', 'samoyede'),
+    ('https://www.chien.com/photos-chiens/photo-samoyede-56-5.php', 'samoyede'),
+    ('https://www.chien.com/photos-chiens/photo-samoyede-56-6.php', 'samoyede'),
+    ('https://www.chien.com/photos-chiens/photo-carlin-145-1.php', 'carlin'),
+    ('https://www.chien.com/photos-chiens/photo-carlin-145-2.php', 'carlin'),
+    ('https://www.chien.com/photos-chiens/photo-carlin-145-3.php', 'carlin'),
+    ('https://www.chien.com/photos-chiens/photo-carlin-145-4.php', 'carlin'),
+    ('https://www.chien.com/photos-chiens/photo-carlin-145-5.php', 'carlin'),
+    ('https://www.chien.com/photos-chiens/photo-carlin-145-6.php', 'carlin'),
+    ('https://www.chien.com/photos-chiens/photo-carlin-145-7.php', 'carlin'),
+    ('https://www.chien.com/photos-chiens/photo-carlin-145-8.php', 'carlin'),
 ]
-
 
 for url, breed_name in urls_and_breeds:
     response = requests.get(url)
     tree = html.fromstring(response.content)
     image_urls = tree.xpath('//img[@class="lozad"]/@data-src')
     download_images(image_urls, base_folder, breed_name)
-
-
